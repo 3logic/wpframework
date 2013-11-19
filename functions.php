@@ -4,6 +4,31 @@
  *
  * @package framework
  */
+if(!defined('DS')){
+	define('DS', DIRECTORY_SEPARATOR);
+}
+require_once( get_template_directory() . DS . 'include' . DS . 'SplClassLoader.php');
+
+$tframework_loader = new SplClassLoader('TFramework', get_template_directory() . DS . 'include');
+$tframework_loader->register();
+
+$framework_loader = new SplClassLoader('Framework', get_template_directory() . DS . 'include');
+$framework_loader->register();
+
+/**
+ * Esempio di utilizzo di una classe del framework
+ */
+use \Framework\Example;
+use	\TFramework\Utils;
+
+/**
+ * Debug function. Wrapper on TFramework\Utils::debug
+ * @param  mixed $var Everything
+ * @return echo debug info
+ */
+function debug(){
+	call_user_func_array(array('Utils','debug'), func_get_args());
+}
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -52,9 +77,24 @@ function framework_setup() {
 		'default-color' => 'ffffff',
 		'default-image' => '',
 	) ) );
+
+	Example::onThemeSetup();
+
 }
 endif; // framework_setup
 add_action( 'after_setup_theme', 'framework_setup' );
+
+if(!function_exists('framework_init')):
+/**
+ * On init hook
+ * @return void
+ */
+function framework_init(){
+	Example::onInit();
+}
+endif;
+add_action( 'init', 'framework_init');
+
 
 /**
  * Register widgetized area and update sidebar with default widgets.
