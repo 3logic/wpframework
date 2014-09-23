@@ -1,6 +1,11 @@
 {
     "name": "3logic/wpframework",
+    "description": "Object-oriented custom post type framework",
+    "version": "1.0.0",
+    "keywords": ["wordpress","object-oriented"],
+    "homepage": "http://git.3logic.it/web/wpthemeframework.git",
     "type": "library",
+    "license": "LGPL-2.1+",
     "autoload": {
         "psr-4": {"TFramework\\": "TFramework/"}
     }
