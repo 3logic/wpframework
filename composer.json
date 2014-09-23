@@ -1,0 +1,7 @@
+{
+    "name": "3logic/wpframework",
+    "type": "library",
+    "autoload": {
+        "psr-4": {"TFramework\\": "TFramework/"}
+    }
+}
