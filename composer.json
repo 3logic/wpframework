@@ -5,7 +5,7 @@
     "keywords": ["wordpress","object-oriented"],
     "homepage": "http://git.3logic.it/web/wpthemeframework.git",
     "type": "library",
-    "license": "LGPL-2.1+",
+    "license": "LGPL-3.0+",
     
     "require-dev": {
         "phpunit/phpunit": "4.2.*"
