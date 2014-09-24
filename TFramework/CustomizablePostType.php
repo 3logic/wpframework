@@ -7,7 +7,7 @@ use TFramework\BaseType,
 
 abstract class CustomizablePostType extends BaseType implements Hookable, Customizable{
 	
-	const CUSTOM_TYPE_PREFIX = 'mf_';
+	const CUSTOM_TYPE_PREFIX = '';
 	const CUSTOM_TAXONOMY_NAME = '';
 	
 	/**
@@ -15,7 +15,7 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 	 * It's a wrapper around standard wordpress post instance
 	 * @param [type] $post [description]
 	 */
-	protected function __construct($post){
+	public function __construct($post){
 		parent::__construct($post);
 		foreach ($post as $key => $value) {
 			$this->{$key} = $value;

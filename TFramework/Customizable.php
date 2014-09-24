@@ -1,5 +1,7 @@
 <?php 
 namespace TFramework;
+
+
 /**
  * Interface for classes that need to be called on theme hooks
  */
