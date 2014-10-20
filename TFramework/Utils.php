@@ -3,16 +3,14 @@ namespace TFramework;
 
 class Utils{
 
-    private static $_sites;	
+    private static $_sites;
 
     /**
-     * Debug function
-     * @param  mixed $var Everything
-     * @return echo debug info
+     * Generate content for debug function
+     * @param  mixed $var Everything to debug
+     * @return string      The string representing the debug text
      */
-    public static function debug($var = null){
-        if( WP_DEBUG == false || WP_DEBUG_DISPLAY == false)
-            return;
+    protected static function _generate_debug($var = null){
         $var_to_dump = func_get_args();
         $debug_message = '';
         foreach ($var_to_dump as $var) {
@@ -20,6 +18,8 @@ class Utils{
                 $var = '(null)';
             if($var === false)
                 $var = '(bool)false';
+            if($var === true)
+                $var = '(bool)true';
             if($var === 0)
                 $var = '(int)0';
             if($var === '')
@@ -30,7 +30,18 @@ class Utils{
         }
         $backtrace = debug_backtrace();
         $file_name = substr($backtrace[0]['file'],strripos($backtrace[0]['file'],'/') + 1);
-        echo sprintf('<pre class="debug">%s:%d<br />%s</pre>',$file_name,$backtrace[0]['line'],$debug_message); 
+        return sprintf('<pre class="debug">%s:%d<br />%s</pre>',$file_name,$backtrace[0]['line'],$debug_message);
+    }
+
+    /**
+     * Echoes debug informations
+     * @param  mixed $var Everything
+     * @return void
+     */
+    public static function debug($var = null){
+        if( WP_DEBUG == false || WP_DEBUG_DISPLAY == false)
+            return;
+        echo self::_generate_debug(); 
     }
 	
     /**

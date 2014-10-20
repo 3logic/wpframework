@@ -14,3 +14,4 @@ We will soon provide some examples of use of this library.
 Thanks for using this.
 This library is brougth to you by
  - [Fabrizio Ruggeri](https://github.com/ramiel)
+by [3logic](http://www.3logic.it)
