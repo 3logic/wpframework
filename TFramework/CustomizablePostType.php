@@ -21,6 +21,13 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 			$this->{$key} = $value;
 		}
 	}
+
+	public function __get($name){
+		if(!function_exists("register_field_group")){
+			return null;
+		}
+		return get_field($name, $this->ID);
+    }
     
     /**
      * Return actual current post type name
@@ -37,25 +44,6 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 	 */
 	public static function getCustomTaxonomyName(){
 		return self::CUSTOM_TYPE_PREFIX . static::CUSTOM_TAXONOMY_NAME;
-	}
-                
-
-    /**
-	 * Auto set custom fields properties as a native property for the customizable type
-	 * @param Array|Associative Array $property_names An array of names of custom fields properties
-	 * 												If the parameter is an Associative array the follow keys are allowed
-	 * 												@key String name The name of the properties. Will be used instead of property key name. Optional, default null
-	 * 												@key Function after_get Will be called after field retrieving. Default null. Following parameters will be passed
-	 * @param Mixed $property retrieved property
-	 * @param Object &$custom_type The entire object representing custom post type passed by reference											
-	 */
-	protected function setCustomFieldProperties( $property_names = array() ){
-		$instance = $this;
-		foreach ($property_names as $property => $property_name) {
-			$this->{$property_name} = function() use($instance,$property_name){
-				return get_field($property_name, $instance->ID);
-			};
-		}
 	}
 	
 	

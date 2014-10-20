@@ -4,6 +4,8 @@ namespace TFramework\Test;
 use \PHPUnit_Framework_TestCase,
 	TFramework\Test\Fixture\Project;
 
+require( 'Fixture/global.php');
+
 class PostTypeTest extends PHPUnit_Framework_TestCase
 {
 
@@ -34,5 +36,14 @@ class PostTypeTest extends PHPUnit_Framework_TestCase
         $project = $this->generateProject();
         $this->assertEquals('Bellissimo progetto', $project->post_title);
         $this->assertEquals(self::$_loerm_ipsum_html, $project->post_content);
+    }
+
+    
+    /**
+	 * @test
+	 */
+    public function testPostACFWithGetter(){
+        $project = $this->generateProject();
+        $this->assertEquals('Field_value for name on post 10', $project->name);
     }
 }
