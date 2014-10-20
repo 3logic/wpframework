@@ -29,8 +29,9 @@ class Utils{
             $debug_message .= print_r($var ,true). '<br/>'; 
         }
         $backtrace = debug_backtrace();
-        $file_name = substr($backtrace[0]['file'],strripos($backtrace[0]['file'],'/') + 1);
-        return sprintf('<pre class="debug">%s:%d<br />%s</pre>',$file_name,$backtrace[0]['line'],$debug_message);
+        $backtrace = $backtrace[2];
+        $file_name = $backtrace['file'];// substr($backtrace['file'],strripos($backtrace['file'],'/') + 1);
+        return sprintf('<pre class="debug">%s:%d<br />%s</pre>',$file_name,$backtrace['line'],$debug_message);
     }
 
     /**
@@ -41,9 +42,9 @@ class Utils{
     public static function debug($var = null){
         if( WP_DEBUG == false || WP_DEBUG_DISPLAY == false)
             return;
-        echo self::_generate_debug(); 
+        echo call_user_func_array(array('TFramework\Utils','_generate_debug'), func_get_args());// self::_generate_debug(); 
     }
-	
+    
     /**
      * Retrieve blog list
      * @return array Array of registered blogs
