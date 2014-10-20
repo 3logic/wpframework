@@ -80,7 +80,7 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 		$name_ucf_s = $name_ucf . 's';
 		$defaults = array(
 			'label' => $name_ucf_s,
-			$labels = array(
+			'labels' => array(
 				'name'               => _x( $name_ucf_s, 'post type general name', $options['text_domain'] ),
 				'singular_name'      => _x( $name_ucf, 'post type singular name', $options['text_domain'] ),
 				'menu_name'          => _x( $name_ucf_s, 'admin menu', $options['text_domain'] ),

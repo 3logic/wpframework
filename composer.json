@@ -1,7 +1,7 @@
 {
     "name": "3logic/wpframework",
     "description": "Object-oriented custom post type/taxonomies framework for Wordpress",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": ["wordpress","object-oriented"],
     "homepage": "http://git.3logic.it/web/wpthemeframework.git",
     "type": "library",
