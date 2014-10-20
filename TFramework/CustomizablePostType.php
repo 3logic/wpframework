@@ -73,10 +73,29 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 	 * @param Array $custom_post_type_args array of arguments. Will override
 	 * @return Object|WP_Error
 	 */
-	static protected function _registerCustomType($type_name, $custom_post_type_args = array()){
+	static protected function _registerCustomType($type_name, $custom_post_type_args = array(), $options = null){
+		$name = $type_name;
+		$name_s = $name . 's';
+		$name_ucf = ucfirst($type_name);
+		$name_ucf_s = $name_ucf . 's';
 		$defaults = array(
-			'label' => ucfirst($type_name).'s',
-			'labels' => array(),
+			'label' => $name_ucf_s,
+			$labels = array(
+				'name'               => _x( $name_ucf_s, 'post type general name', $options['text_domain'] ),
+				'singular_name'      => _x( $name_ucf, 'post type singular name', $options['text_domain'] ),
+				'menu_name'          => _x( $name_ucf_s, 'admin menu', $options['text_domain'] ),
+				'name_admin_bar'     => _x( $name_ucf, 'add new on admin bar', $options['text_domain'] ),
+				'add_new'            => _x( 'Add New', 'book', $options['text_domain'] ),
+				'add_new_item'       => __( "Add New $name_ucf", $options['text_domain'] ),
+				'new_item'           => __( "New $name_ucf", $options['text_domain'] ),
+				'edit_item'          => __( "Edit $name_ucf", $options['text_domain'] ),
+				'view_item'          => __( "View $name_ucf", $options['text_domain'] ),
+				'all_items'          => __( "All $name_ucf_s", $options['text_domain'] ),
+				'search_items'       => __( "Search $name_ucf_s", $options['text_domain'] ),
+				'parent_item_colon'  => __( "Parent $name_ucf_s:", $options['text_domain'] ),
+				'not_found'          => __( "No $name_s found.", $options['text_domain'] ),
+				'not_found_in_trash' => __( "No $name_s found in Trash.", $options['text_domain'] )
+			),
 			'public' => true,
 			'publicly_queryable' => true,
 			'show_ui' => true,
