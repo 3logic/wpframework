@@ -62,6 +62,13 @@ class Utils{
         return self::$_sites;
      }
 
+     public static function is_acf_active(){
+        if(!is_admin()){
+            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        }
+        return is_plugin_active( 'advanced-custom_fields/acf.php' );
+     }
+
      
 }
 ?>
