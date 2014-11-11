@@ -62,16 +62,13 @@ class Utils{
         return self::$_sites;
      }
 
-     /**
-       * Ritorna true se ACF è attivo sul sito
-       * @return boolean 
-       */
-      public static function is_acf_active(){
-         if(!function_exists("register_field_group"))
-             return false;
-         include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-         return \is_plugin_active( 'advanced-custom_fields/acf.php' );
-      }
+    /**
+     * Ritorna true se ACF è attivo sul sito
+     * @return boolean 
+    */
+    public static function is_acf_active(){
+        return function_exists("register_field_group");
+    }
      
 }
 ?>
