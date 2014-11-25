@@ -12,11 +12,21 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 
 	protected static $registered_fields;
     
-    protected static function get_registered_fields(){
+    protected static function get_registered_fields($id_filter = null){
         $class = get_called_class();
         if(!isset(static::$registered_fields[$class]))
             static::$registered_fields[$class] = array();
-        return static::$registered_fields[$class];
+
+        $fields = static::$registered_fields[$class];
+
+        if($id_filter){
+        	foreach($fields as $k=>$f){
+        		if($k!==$id_filter && $f['field']['name']!==$id_filter)
+        			unset($fields[$k]);
+        	}
+        }
+
+        return $fields;
     }
 
     protected static function add_registered_fields($newly_registered){
@@ -30,7 +40,7 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
             throw new Exception("Missing register_field_group function. Did you include ACF plugin?", 1);           
         }
 
-        $group_id = $group_data['id'];
+        $group_id = isset($group_data['id']) ? $group_data['id'] : $group_data['key'];
         $fields = $group_data['fields'];
 
         $newly_registered = array();
