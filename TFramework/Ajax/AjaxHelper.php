@@ -171,10 +171,11 @@ class AjaxHelper{
                 Utils::debug($_GET);
                 call_user_func($this->_registered[$name]['callable']);
             }
+            else {
+                self::_set_json_headers(501);
+                die();
+            }
         }
     }
-
-
-
     
 }
