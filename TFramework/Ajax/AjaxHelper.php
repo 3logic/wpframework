@@ -4,6 +4,7 @@ namespace TFramework\Ajax;
 use TFramework\Utils;
 
 class AjaxHelper{
+    const BASENAME_QUERY_KEY = 'ajaxcontext';
 
     private $_basename = '';
     private $_basepath = '';
@@ -151,20 +152,20 @@ class AjaxHelper{
     public function rewrites_init(){
         add_rewrite_rule(
             'ajax/'.$this->_basename.'/([^/]*)',
-            'index.php?tajax='.$this->_basename.'&method=$matches[1]',
+            sprintf('index.php?%s=%s&method=$matches[1]', self::BASENAME_QUERY_KEY, $this->_basename),
             'top'
         );
     }
 
     public function query_vars( $query_vars ){
-        $query_vars[] = 'tajax';
+        $query_vars[] = self::BASENAME_QUERY_KEY;
         $query_vars[] = 'method';
         return $query_vars;
     }
     
     
     public function parse_request($wp){
-        if ( array_key_exists( 'tajax', $wp->query_vars ) ){
+        if ( array_key_exists( self::BASENAME_QUERY_KEY, $wp->query_vars ) && $wp->query_vars[self::BASENAME_QUERY_KEY] == $this->_basename ){
             $name = isset($wp->query_vars['method'])? $wp->query_vars['method'] : '';
             if(isset($this->_registered[$name])){
                 Utils::debug($wp->query_vars);
