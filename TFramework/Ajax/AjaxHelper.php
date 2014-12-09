@@ -167,12 +167,15 @@ class AjaxHelper{
         if ( array_key_exists( 'tajax', $wp->query_vars ) ){
             $name = isset($wp->query_vars['method'])? $wp->query_vars['method'] : '';
             if(isset($this->_registered[$name])){
+                Utils::debug($wp->query_vars);
+                Utils::debug($_GET);
                 call_user_func($this->_registered[$name]['callable']);
+            }
+            else {
+                self::_set_json_headers(501);
+                die();
             }
         }
     }
-
-
-
     
 }
