@@ -13,9 +13,9 @@ class AjaxHelper{
     /**
      * Cotruisce un AjaxHelper
      * @param string $basename Un base name per la tu applicazione. Costituirà la base dei path che sarà 'ajax/$basename/'
-     * @param string $basepath Path al file del plugin (di solito __FILE__ nel file del plugin)
+     * @param string $basepath Path al file del plugin (di solito __FILE__ nel file del plugin). Optional
      */
-    public function __construct($basename, $basepath){
+    public function __construct($basename, $basepath = null){
         $this->_basename = $basename;
         $this->_basepath = $basepath;
     }
@@ -126,12 +126,17 @@ class AjaxHelper{
         return true;
     }
 
+    /**
+     * After your path are registered you must enable them
+     * @return [type] [description]
+     */
     public function enable(){
         add_action( 'init', array($this, 'rewrites_init'));
         add_filter( 'query_vars', array($this,'query_vars'));
         add_action( 'parse_request', array($this,'parse_request'));
-
-        register_activation_hook( $this->_basepath, array($this,'activate') );
+        if( !is_null( $this->_basepath ) ){
+            register_activation_hook( $this->_basepath, array($this,'activate') );
+        }
         // register_deactivation_hook( $this->_basepath, array($this,'deactivate') );
     }
 
