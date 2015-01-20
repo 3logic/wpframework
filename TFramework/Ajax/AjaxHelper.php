@@ -168,8 +168,6 @@ class AjaxHelper{
         if ( array_key_exists( self::BASENAME_QUERY_KEY, $wp->query_vars ) && $wp->query_vars[self::BASENAME_QUERY_KEY] == $this->_basename ){
             $name = isset($wp->query_vars['method'])? $wp->query_vars['method'] : '';
             if(isset($this->_registered[$name])){
-                Utils::debug($wp->query_vars);
-                Utils::debug($_GET);
                 call_user_func($this->_registered[$name]['callable']);
             }
             else {
