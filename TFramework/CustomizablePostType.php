@@ -9,7 +9,51 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 	
 	const CUSTOM_TYPE_PREFIX = '';
 	const CUSTOM_TAXONOMY_NAME = '';
-	
+
+	protected static $registered_fields;
+    
+    protected static function get_registered_fields($id_filter = null){
+        $class = get_called_class();
+        if(!isset(static::$registered_fields[$class]))
+            static::$registered_fields[$class] = array();
+
+        $fields = static::$registered_fields[$class];
+
+        if($id_filter){
+        	foreach($fields as $k=>$f){
+        		if($k!==$id_filter && $f['field']['name']!==$id_filter)
+        			unset($fields[$k]);
+        	}
+        }
+
+        return $fields;
+    }
+
+    protected static function add_registered_fields($newly_registered){
+        $class = get_called_class();
+
+        static::$registered_fields[$class] = array_merge_recursive(static::get_registered_fields(), $newly_registered);
+    }
+
+    protected static function register_field_group($group_data){
+        if(!function_exists("register_field_group")){
+            throw new Exception("Missing register_field_group function. Did you include ACF plugin?", 1);           
+        }
+
+        $group_id = isset($group_data['id']) ? $group_data['id'] : $group_data['key'];
+        $fields = $group_data['fields'];
+
+        $newly_registered = array();
+        foreach($fields as $f){
+            $field_key = $f['key'];
+            $newly_registered[$field_key] = array('group_id'=>$group_id, 'field'=>$f);
+        }
+
+        static::add_registered_fields($newly_registered);
+
+        register_field_group($group_data);
+    }
+
 	/**
 	 * constructor
 	 * It's a wrapper around standard wordpress post instance
@@ -143,7 +187,7 @@ abstract class CustomizablePostType extends BaseType implements Hookable, Custom
 		}
 	}
 	
-	
+
 	/**
 	 * Code to be executed on theme initialization
 	 * @param Object $options Option passed to theme setup
